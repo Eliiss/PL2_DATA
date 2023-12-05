@@ -1,8 +1,40 @@
-//
-// Created by elis8 on 04/12/2023.
-//
+#ifndef CentralStation_h
+#define CentralStation_h
 
-#ifndef UNTITLED2_CENTRALSTATION_H
-#define UNTITLED2_CENTRALSTATION_H
+#include <iostream>
+#include <string>
+#include "Queue.h"
+#include "Hub.h"
 
-#endif //UNTITLED2_CENTRALSTATION_H
+using std::cout; using std::cin; using std::endl; using std::string;
+
+class Packet;
+
+class CentralStation{
+
+private:
+
+    Queue packetInQueue;
+    Hub hubs[4];
+    int generatedPackets = 0;
+    int packetsProcessed = 0;
+    int totalGeneratedPackets = 0;
+
+public:
+    CentralStation();
+    void generatePackets(int numberToGenerate, int seed);
+    void resetGeneratedPackets();
+    void enqueuePacket(Packet &packet);
+    void dequeuePacket(int num);
+    void displayPackets();
+    int getPacketsProcessed() const;
+    bool isQueueEmpty();
+    void transferPackets(Packet packet);
+    Hub * getHub(int index);
+    int getGeneratedPackets();
+    void addTotalGeneratedPackets(int num);
+    void substractGeneratedPackets(int num);
+
+};
+
+#endif
