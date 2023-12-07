@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Packet.h"
 #include "DoubleLinkedList.h"
+#include "Queue.h"
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
@@ -13,17 +14,23 @@ class DynamicStack{
 
 private:
     Node* top;
-    DoubleLinkedList packetsProcessedPC;
+    Queue packetsProcessedHub;
+
 
 public:
     DynamicStack();
+    ~DynamicStack();
+
     bool isEmpty();
+    int getSize() const;
     void push(Packet &packet);
     Packet pop ();
+    void process();
+    Packet searchPacket(const string &packetLabel);
+    bool movePacket(DynamicStack hubs[], const string &packetLabel);
+    void deletePacket(const string &packetLabel);
     void displayPackets();
     void displayProcessedPackets();
-    int getTop() const;
-    ~DynamicStack();
 
 };
 

@@ -1,5 +1,6 @@
-#ifndef QUEUE_HPP
-#define QUEUE_HPP
+#ifndef UNTITLED2_QUEUE_H
+#define UNTITLED2_QUEUE_H
+
 
 #include <iostream>
 #include <string>
@@ -30,4 +31,4 @@ public:
     ~Queue(); // destructor
 };
 
-#endif
+#endif //UNTITLED2_QUEUE_H

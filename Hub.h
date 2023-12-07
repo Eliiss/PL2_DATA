@@ -1,28 +1,27 @@
-#ifndef HUB_HPP
-#define HUB_HPP
-
-#include <iostream>
-#include <string>
-#include "Stack.h"
-
+#ifndef UNTITLED2_HUB_H
+#define UNTITLED2_HUB_H
+#include "DynamicStack.h"
+#include "Util.h"
 
 using std::cout; using std::cin; using std::endl; using std::string;
-
 
 class Hub{
 
 private:
-    Stack packetInStack;
+    PC pcs[N2];
+    DynamicStack hubStack[N2];
 
 public:
-    void pushPacket(Packet packet);
-    Packet popPacket();
-    bool isHubEmpty();
-    bool isHubFull();
-    void displayPacketsHub();
-    void displayProcessedPacketsHub();
-    int getHubTop();
+    Hub();
+    void pushHub(Packet &packet);
+    void processPackets();
+    Packet searchPacketHub(const string &packetLabel);
+    bool movePacketToAnotherHub(DynamicStack hubs[], const string &packetLabel);
+    void deletePacketInHub(const string &packetLabel);
+    void displayPacketsInHub();
+    void displayProcessedPacketsInHub();
 
 };
 
-#endif
+
+#endif //UNTITLED2_HUB_H
