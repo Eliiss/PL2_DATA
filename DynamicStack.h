@@ -8,7 +8,7 @@
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
-struct Node; //reutilizamos el nodo en queue
+struct Node; //reusing queue node
 
 class DynamicStack{
 

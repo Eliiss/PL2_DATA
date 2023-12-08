@@ -13,6 +13,8 @@ private:
 
 public:
     Hub();
+    int getPostalCode(int index)const;
+    DynamicStack & getStackByPostalCode(int postalCode);
     void pushHub(Packet &packet);
     void processPackets();
     Packet searchPacketHub(const string &packetLabel);

@@ -12,7 +12,7 @@ bool Queue::isEmpty() {
 }
 
 void Queue::enqueue(Packet &packet){
-    Node *temp = new Node;
+    Node *temp = new Node(packet);
     temp->data = packet;
     temp->next=nullptr;
 

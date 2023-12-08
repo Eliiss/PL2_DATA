@@ -14,6 +14,8 @@ class Hub;
 struct Node{
     Packet data;
     Node *next;
+    Node(const Packet& p) : data(p), next(nullptr) {}
+
 };
 
 class Queue{

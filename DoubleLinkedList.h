@@ -4,32 +4,34 @@
 #include <iostream>
 #include <string>
 #include "Packet.h"
-#include "PCs.h"
+#include "DynamicStack.h"
+#include "AVL.h"
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
-struct Node{
+struct Nodo{
     Packet data;
-    Node *next;
-    Node *prev;
-    Node(Packet &packet): data(packet), next(nullptr), prev(nullptr) {}
+    Nodo *next;
+    Nodo *prev;
+    Nodo(Packet &packet): data(packet), next(nullptr), prev(nullptr) {}
 };
 
 class DoubleLinkedList{
 private:
-    Node *head;
-    Node *tail;
-    PCs pc [9];
+    Nodo *head;
+    Nodo *tail;
+    AVL hubInTree;
+
 
 public:
     DoubleLinkedList();
     void insertBeginning(Packet &packet);
-    void insertMiddle(Node* prev_node, Packet &packet);
+    void insertMiddle(Nodo* prev_node, Packet &packet);
     void insertEnd(Packet &packet);
     Packet searchByID(const string &id);
-    void deleteByID(const string &id);
-    void displayPacketsForPC();
+    void displayPacketsForHub();
     void transportPacket(Packet &packet);
+    DynamicStack* findPC(int pcPostalCode);
     ~DoubleLinkedList();
 
 };

@@ -1,5 +1,4 @@
 #include "Hub.h"
-
 #include <iostream>
 #include <string>
 
@@ -11,6 +10,20 @@ Hub::Hub() {
         pcs[i].abbreviation = townAbbreviations[i];
         pcs[i].name = townNames[i];
         pcs[i].coordinates = townCoordinates[i];
+    }
+}
+
+int Hub::getPostalCode(int index) const {
+    if (index>0 && index>N2){
+        return (pcs[index].postalCode);
+    }
+}
+
+DynamicStack & Hub::getStackByPostalCode(int postalCode) {
+    for (int i = 0; i < N2 ; i++){
+        if (pcs[i].postalCode == postalCode){
+            return hubStack[i];
+        }
     }
 }
 

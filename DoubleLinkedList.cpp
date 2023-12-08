@@ -1,6 +1,6 @@
 #include "DoubleLinkedList.h"
 #include "Packet.h"
-#include "PCs.h"
+#include "DynamicStack.h"
 #include <iostream>
 #include <string>
 
@@ -10,7 +10,7 @@ DoubleLinkedList::DoubleLinkedList(): head(nullptr), tail(nullptr) {}
 
 void DoubleLinkedList::insertBeginning(Packet &packet) {
 
-    Node * newNode = new Node(packet); //creamos una nueva celda
+    Nodo * newNode = new Nodo(packet); //creation of new node
     if (head== nullptr){
         head= tail = newNode;
     }
@@ -21,26 +21,26 @@ void DoubleLinkedList::insertBeginning(Packet &packet) {
     }
 }
 
-void DoubleLinkedList ::insertMiddle(Node * prev_node , Packet &packet) {
+void DoubleLinkedList ::insertMiddle(Nodo * prev_node , Packet &packet) {
 
     if (prev_node == nullptr){
         cout << "El paquete en la posición anterior es el ultimo paquete de la lista"<<endl;
     }
 
-    Node * newNode= new Node (packet);
+    Nodo * newNode= new Nodo (packet);
 
-    newNode->next = prev_node->next; //conexion entre el nodo creado y el ountero delnodo previo a este
+    newNode->next = prev_node->next; //connection between the created node and the previous one
     newNode->prev =prev_node;
 
-    if (prev_node->next!= nullptr){ //verificamos que no estamos en el ultimo nodo de la lista
-        prev_node->next->prev = newNode; //hacemos el enlace bidireccional
+    if (prev_node->next!= nullptr){ //make sure we are not at the end of the list
+        prev_node->next->prev = newNode; //create bidirectional link
     }
 
     prev_node->next = newNode;
 }
 
 void DoubleLinkedList::insertEnd(Packet &packet) {
-    Node* newNode = new Node(packet);
+    Nodo* newNode = new Nodo(packet);
     if (head== nullptr){
         head= tail= newNode;
     }
@@ -51,11 +51,11 @@ void DoubleLinkedList::insertEnd(Packet &packet) {
     }
 }
 
-Packet DoubleLinkedList::searchByID(const string &id) {
+Packet DoubleLinkedList::searchByID(const string &packetLabel) {
 
-    Node* current = head;
+    Nodo* current = head;
     while (current!= nullptr){
-        if (current->data.getLabel()==id){
+        if (current->data.getLabel()==packetLabel){
             return current->data;
         }
         current= current->next;
@@ -63,57 +63,104 @@ Packet DoubleLinkedList::searchByID(const string &id) {
     return Packet(); // si termina el bucle y no se encuentra devolver paquete vacio
 }
 
-void DoubleLinkedList::deleteByID(const string &id) {
+void DoubleLinkedList::displayPacketsForHub() {
 
-    Node* current = head;
-    while (current!= nullptr && current->data.getLabel() != id){
-        current= current->next;
-    }
-
-    //gestion de los posibles casos despues del bucle
-    if (current==nullptr){
-        cout<<"No se puede elimanr el paquete proporcionado ya que no existe" <<endl;
-    }
-    if (current == head){
-        head= current->next; //para no perder la cabecera
-    }
-
-    //eliminamos los enlaces del nodo a quitar
-    if (current->prev!= nullptr){
-        current->prev->next = current->next;
-    }
-
-    if (current->next!= nullptr){
-        current->next->prev=current->prev;
-    }
-    delete current; // eliminamos de la memoria el nodo
-    cout<<"Paquete con ID "<< id <<"eliminado correctamente"<<endl;
-}
-
-void DoubleLinkedList::displayPacketsForPC() {
-    Node* current = head;
+    Nodo* current = head;
 
     while (current!= nullptr){
-        if (current->data.getPostalCode()== 37115){
 
+        int postalCode = current->data.getPostalCode();
+
+        if (postalCode== 37115){
+            cout << "Packet to be processed to Hub Almenara de Tormes: "<< current<< endl;
         }
-
+        else if (postalCode== 37427){
+            cout << "Packet to be processed to Hub Pedrosillo el Ralo: "<< current<< endl;
+        }
+        else if (postalCode== 37449){
+            cout << "Packet to be processed to Hub Rodillo "<< current<< endl;
+        }
+        else if (postalCode== 37893){
+            cout << "Packet to be processed to Hub Villagonzalo de Tormes: "<< current<< endl;
+        }
+        else if (postalCode== 37797){
+            cout << "Packet to be processed to Hub Castellanos de Villiquera: "<< current<< endl;
+        }
+        else if (postalCode== 37796){
+            cout << "Packet to be processed to Hub Mozárbez: "<< current<< endl;
+        }
+        else if (postalCode== 37129){
+            cout << "Packet to be processed to Hub Barregas: "<< current<< endl;
+        }
+        else if (postalCode== 37340){
+            cout << "Packet to be processed to Hub Aldearrubia: "<< current<< endl;
+        }
+        else if (postalCode== 37001){
+            cout << "Packet to be processed to Hub Salamanca: "<< current<< endl;
+        }
+        current = current->next;
     }
-
-
 }
 
 void DoubleLinkedList:: transportPacket(Packet &packet){
 
+    Nodo * current = head;
+    while (current!= nullptr){
+        if(current->data.getPostalCode()==packet.getPostalCode()){
+            break;
+        }
+        current = current->next;
+    }
+
+    if (current== nullptr){
+        cout << "Packet does not exisit in the central station"<<endl;
+    }
+
+    if (current->prev != nullptr){
+        current->prev->next =current->next;
+        //delete packet from list
+    }
+    else {
+        //when the packet is in top position
+        head = current->next;
+    }
+
+    if (current->next!= nullptr){
+        current->next->prev = current->prev;
+    }
+
+    delete current;
+
+    int pcPostalCode= packet.getPostalCode();
+    DynamicStack *pcStack = findPC(pcPostalCode);
+
+    if (pcStack != nullptr){
+        pcStack->push(packet);
+        cout << "Packet with label " <<packet.getLabel()<< "transported to PC" <<endl;
+    }
+    else{
+        cout <<"PC in label not found in system"<< endl;
+    }
+}
+
+DynamicStack* DoubleLinkedList::findPC(int pcPostalCode) {
+    Hub * hub= hubInTree.search(pcPostalCode);
+
+    if (hub != nullptr){
+        DynamicStack & pcStack = hub->getStackByPostalCode(pcPostalCode);
+        return &(pcStack);
+    }
+    else{
+        return nullptr;
+    }
 }
 
 
-
 DoubleLinkedList:: ~DoubleLinkedList(){
-    Node* current = head;
+    Nodo* current = head;
     while (current != nullptr){
-        Node* nextNode = current->next;
-        delete current; //libera la memoria del nodo actual
-        current = nextNode; //avanza al siguiente nodo
+        Nodo* nextNode = current->next;
+        delete current; //free memory of actual node
+        current = nextNode; //move to next node
     }
 }
