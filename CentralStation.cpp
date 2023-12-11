@@ -29,6 +29,11 @@ void CentralStation::transferPackets(Packet packet){
     packetsProcessed++;
 }
 
+void CentralStation::processToHub() {
+
+}
+
+
 Packet CentralStation::searchByID(const string &packetLabel) {
     return packetInList.searchByID(packetLabel);
 }

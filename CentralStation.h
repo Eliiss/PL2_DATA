@@ -31,6 +31,7 @@ public:
     void displayPackets();
     int getPacketsProcessed() const;
     void transferPackets(Packet packet);
+    void processToHub ();
     int getGeneratedPackets();
     void addTotalGeneratedPackets(int num);
     void substractGeneratedPackets(int num);

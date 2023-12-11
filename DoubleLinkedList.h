@@ -21,6 +21,9 @@ private:
     Nodo *head;
     Nodo *tail;
     AVL hubInTree;
+    int packetsInHub;
+    DynamicStack packetProcessed;
+
 
 
 public:
@@ -31,6 +34,7 @@ public:
     Packet searchByID(const string &id);
     void displayPacketsForHub();
     void transportPacket(Packet &packet);
+    void process();
     DynamicStack* findPC(int pcPostalCode);
     ~DoubleLinkedList();
 

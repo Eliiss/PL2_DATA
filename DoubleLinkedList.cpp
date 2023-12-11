@@ -6,7 +6,7 @@
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
-DoubleLinkedList::DoubleLinkedList(): head(nullptr), tail(nullptr) {}
+DoubleLinkedList::DoubleLinkedList(): head(nullptr), tail(nullptr), packetsInHub(0) {}
 
 void DoubleLinkedList::insertBeginning(Packet &packet) {
 
@@ -18,13 +18,14 @@ void DoubleLinkedList::insertBeginning(Packet &packet) {
         newNode->next =head;
         head ->prev =newNode;
         head =newNode;
+        packetsInHub++;
     }
 }
 
 void DoubleLinkedList ::insertMiddle(Nodo * prev_node , Packet &packet) {
 
     if (prev_node == nullptr){
-        cout << "El paquete en la posición anterior es el ultimo paquete de la lista"<<endl;
+        cout << "The packet in the previous position is the last one in the list"<<endl;
     }
 
     Nodo * newNode= new Nodo (packet);
@@ -37,6 +38,8 @@ void DoubleLinkedList ::insertMiddle(Nodo * prev_node , Packet &packet) {
     }
 
     prev_node->next = newNode;
+    packetsInHub++;
+
 }
 
 void DoubleLinkedList::insertEnd(Packet &packet) {
@@ -49,6 +52,8 @@ void DoubleLinkedList::insertEnd(Packet &packet) {
         newNode->prev=tail;
         tail=newNode;
     }
+    packetsInHub++;
+
 }
 
 Packet DoubleLinkedList::searchByID(const string &packetLabel) {
@@ -102,6 +107,46 @@ void DoubleLinkedList::displayPacketsForHub() {
     }
 }
 
+void DoubleLinkedList::process() {
+
+    Nodo* current = head;
+
+    for i<197
+        if (packetsInHub >=  N3){
+
+            int postalCode = current->data.getPostalCode();
+
+            if (postalCode== 37115){
+                packetProcessed.push(current->data);
+            }
+            else if (postalCode== 37427){
+                cout << "Packet to be processed to Hub Pedrosillo el Ralo: "<< current<< endl;
+            }
+            else if (postalCode== 37449){
+                cout << "Packet to be processed to Hub Rodillo "<< current<< endl;
+            }
+            else if (postalCode== 37893){
+                cout << "Packet to be processed to Hub Villagonzalo de Tormes: "<< current<< endl;
+            }
+            else if (postalCode== 37797){
+                cout << "Packet to be processed to Hub Castellanos de Villiquera: "<< current<< endl;
+            }
+            else if (postalCode== 37796){
+                cout << "Packet to be processed to Hub Mozárbez: "<< current<< endl;
+            }
+            else if (postalCode== 37129){
+                cout << "Packet to be processed to Hub Barregas: "<< current<< endl;
+            }
+            else if (postalCode== 37340){
+                cout << "Packet to be processed to Hub Aldearrubia: "<< current<< endl;
+            }
+            else if (postalCode== 37001){
+                cout << "Packet to be processed to Hub Salamanca: "<< current<< endl;
+            }
+            current = current->next;
+        }
+    endfor
+}
 void DoubleLinkedList:: transportPacket(Packet &packet){
 
     Nodo * current = head;

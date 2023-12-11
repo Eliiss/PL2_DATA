@@ -8,12 +8,12 @@ using std::cout; using std::cin; using std::endl; using std::string;
 class Hub{
 
 private:
-    PC pcs[N2];
-    DynamicStack hubStack[N2];
+    PC pcs;
+    DynamicStack hubStack;
 
 public:
     Hub();
-    int getPostalCode(int index)const;
+    int getPostalCode()const;
     DynamicStack & getStackByPostalCode(int postalCode);
     void pushHub(Packet &packet);
     void processPackets();
@@ -22,6 +22,7 @@ public:
     void deletePacketInHub(const string &packetLabel);
     void displayPacketsInHub();
     void displayProcessedPacketsInHub();
+    PC& getPc();
 
 };
 

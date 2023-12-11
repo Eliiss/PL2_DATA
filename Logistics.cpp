@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include "Util.h"
 #include "Logistics.h"
 #include "Hub.h"
 #include "Packet.h"
@@ -15,6 +15,10 @@ void Logistics::initialise(){
     //creation of hubs and insertion in AVL
     for (int i =0; i<N2; i++){
         Hub hub;
+        hub.getPc().postalCode = postalCodes[i];
+        hub.getPc().abbreviation = townAbbreviations[i];
+        hub.getPc().name = townNames[i];
+        hub.getPc().coordinates = townCoordinates[i];
         hubInTree.insert(hub.getPostalCode(i),hub); //postal code is the key for the tree and the hub is the element
     }
 }
