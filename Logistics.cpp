@@ -19,7 +19,7 @@ void Logistics::initialise(){
         hub.getPc().abbreviation = townAbbreviations[i];
         hub.getPc().name = townNames[i];
         hub.getPc().coordinates = townCoordinates[i];
-        hubInTree.insert(hub.getPostalCode(i),hub); //postal code is the key for the tree and the hub is the element
+        hubInTree.insert(hub.getPostalCode(),hub); //postal code is the key for the tree and the hub is the element
     }
 }
 
