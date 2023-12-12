@@ -17,12 +17,12 @@ private:
 public:
     void initialise();
     Hub getSelectedPC();
-    void showNextPacket(Hub hub);
+    void showNextPacket();
     void showStatistics();
     Packet searchPacket();
     void removePacket(Hub hub);
-    void transportPacket(Packet packet, Hub hub);
-    void movePCPacket(Packet packet, Hub hub);
+    void transportPacket(Packet packet);
+    void movePCPacket();
     void carryOnDelivery();
 };
 #endif //UNTITLED2_LOGISTICS_H

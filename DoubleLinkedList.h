@@ -33,7 +33,7 @@ public:
     void insertMiddle(Nodo* prev_node, Packet &packet);
     void insertEnd(Packet &packet);
     Packet searchByID(const string &id);
-    void displayPacketsForHub();
+    void displayNextPacket(Hub hub);
     void transportPacket(Packet &packet);
     void process(int numberToProcess);
     ~DoubleLinkedList();

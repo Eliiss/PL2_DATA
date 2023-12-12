@@ -28,7 +28,7 @@ public:
     void insertMiddle(Nodo *prev_node, Packet &packet);
     void insertEnd(Packet &packet);
     Packet searchByID(const string &packetLabel);
-    void displayPackets();
+    void displayNextPacketHub(Hub hub);
     int getPacketsProcessed() const;
     void transferPackets(Packet packet);
     void processToHub ();

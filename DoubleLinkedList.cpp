@@ -1,6 +1,5 @@
 #include "DoubleLinkedList.h"
 #include "Packet.h"
-#include "DynamicStack.h"
 #include <iostream>
 #include <string>
 
@@ -65,47 +64,25 @@ Packet DoubleLinkedList::searchByID(const string &packetLabel) {
         }
         current= current->next;
     }
-    return Packet(); // si termina el bucle y no se encuentra devolver paquete vacio
+    return Packet();
 }
-
-void DoubleLinkedList::displayPacketsForHub() {
-
+void DoubleLinkedList::displayNextPacket(Hub hub) {
     Nodo* current = head;
 
-    while (current!= nullptr){
-
+    while (current != nullptr) {
         int postalCode = current->data.getPostalCode();
 
-        if (postalCode== 37115){
-            cout << "Packet to be processed to Hub Almenara de Tormes: "<< current<< endl;
+        if (postalCode == hub.getPc().postalCode) {
+            cout << "Packet to be processed to Hub " << hub.getPc().name << ": " << current->data.getLabel()<< endl;
+            return;
         }
-        else if (postalCode== 37427){
-            cout << "Packet to be processed to Hub Pedrosillo el Ralo: "<< current<< endl;
-        }
-        else if (postalCode== 37449){
-            cout << "Packet to be processed to Hub Rodillo "<< current<< endl;
-        }
-        else if (postalCode== 37893){
-            cout << "Packet to be processed to Hub Villagonzalo de Tormes: "<< current<< endl;
-        }
-        else if (postalCode== 37797){
-            cout << "Packet to be processed to Hub Castellanos de Villiquera: "<< current<< endl;
-        }
-        else if (postalCode== 37796){
-            cout << "Packet to be processed to Hub Mozárbez: "<< current<< endl;
-        }
-        else if (postalCode== 37129){
-            cout << "Packet to be processed to Hub Barregas: "<< current<< endl;
-        }
-        else if (postalCode== 37340){
-            cout << "Packet to be processed to Hub Aldearrubia: "<< current<< endl;
-        }
-        else if (postalCode== 37001){
-            cout << "Packet to be processed to Hub Salamanca: "<< current<< endl;
-        }
+
         current = current->next;
     }
+
+    cout << "No packet found for Hub " << hub.getPc().name << endl;
 }
+
 
 void DoubleLinkedList::process (int numberToProcess) {
     Nodo *current = head;

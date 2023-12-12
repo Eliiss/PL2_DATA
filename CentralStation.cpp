@@ -38,8 +38,8 @@ Packet CentralStation::searchByID(const string &packetLabel) {
     return packetInList.searchByID(packetLabel);
 }
 
-void CentralStation:: displayPackets (){
-    packetInList.displayPacketsForHub();
+void CentralStation:: displayNextPacketHub (Hub hub){
+    packetInList.displayNextPacket(hub);
 }
 
 int CentralStation:: getPacketsProcessed() const{

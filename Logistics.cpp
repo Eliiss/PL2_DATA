@@ -5,7 +5,6 @@
 #include "Logistics.h"
 #include "Hub.h"
 #include "Packet.h"
-#include "CentralStation.h"
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
@@ -20,7 +19,7 @@ void Logistics::initialise(){
         hub.getPc().name = townNames[i];
         hub.getPc().coordinates = townCoordinates[i];
         hubInTree.insert(hub.getPostalCode(),hub); //postal code is the key for the tree and the hub is the element
-        cout<< "Hub "<< hub.getPc().name<< endl;
+        cout<< "Hub "<< hub.getPc().name<< " with postal code: "<< hub.getPc().postalCode<< endl;
     }
 
     //generation an insertion of the packets
@@ -44,12 +43,14 @@ Hub Logistics::getSelectedPC() {
         cout << "Hub found: " << foundHub->getPc().name << " (" << foundHub->getPc().abbreviation << ")" << endl;
         return *foundHub;
     }
+    cout << "Hub with postal code " << postalCode << " not found." << endl;
     return Hub();
 }
 
 
-void Logistics::showNextPacket(Hub hub){ //Show in the screen the next packet in the hub given
-
+void Logistics::showNextPacket(){ //Show in the screen the next packet in the hub given
+    hub = getSelectedPC();
+    centralStation.displayNextPacketHub(hub);
 }
 
 void Logistics::showStatistics(){ //Show statistics
@@ -57,19 +58,39 @@ void Logistics::showStatistics(){ //Show statistics
 }
 
 Packet Logistics::searchPacket(){ //Ask the user for a label, search the packet and return it
+    string packetLabel;
+    cout << "Enter the label of the packet you want to search: ";
+    cin >> packetLabel;
+
+    // Search for the packet in central station
+    Packet foundPacket = centralStation.searchByID(packetLabel);
+
+    //Search in Hubs if it's not in the central Station
 
 }
 
 void Logistics::removePacket(Hub hub){ //Ask the user for a label and remove the packet
+    hub = getSelectedPC();
+    string packetLabel;
+    cout << "Enter the label of the packet you want to delete: "<< endl;
+    cin >> packetLabel;
+    hub.deletePacketInHub(packetLabel);
+    cout << "Packet with label "<< packetLabel<< " was deleted successfully"<< endl;
 
 }
 
-void Logistics::transportPacket(Packet packet, Hub hub){ //Move the packet to the pc and delete it from the spcs
+void Logistics::transportPacket(Packet packet){ //Move the packet to the pc and delete it from the spcs
+    centralStation.transferPackets(packet);
 
 }
 
-void Logistics::movePCPacket(Packet packet, Hub hub){ //Move the packet to the new hub and delete it from the old one
+void Logistics::movePCPacket(){ //Move the packet to the new hub and delete it from the old one
+    string packetLabel;
+    cout << "Enter the label of the packet you want to delete: "<< endl;
+    cin >> packetLabel;
 
+    hub = getSelectedPC();
+    hub.movePacketToAnotherHub(hub,packetLabel);
 }
 
 void Logistics::carryOnDelivery(){ //Ni idea loco
