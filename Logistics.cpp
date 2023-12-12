@@ -1,31 +1,52 @@
 #include <iostream>
 #include <string>
+#include "ctime"
 #include "Util.h"
 #include "Logistics.h"
 #include "Hub.h"
 #include "Packet.h"
-#include "AVL.h"
-#include "Hub.h"
 #include "CentralStation.h"
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
 void Logistics::initialise(){
 
+    cout << "Welcome to Salamanca Parcel Delivery App" << endl;
+
     //creation of hubs and insertion in AVL
     for (int i =0; i<N2; i++){
-        Hub hub;
         hub.getPc().postalCode = postalCodes[i];
         hub.getPc().abbreviation = townAbbreviations[i];
         hub.getPc().name = townNames[i];
         hub.getPc().coordinates = townCoordinates[i];
         hubInTree.insert(hub.getPostalCode(),hub); //postal code is the key for the tree and the hub is the element
+        cout<< "Hub "<< hub.getPc().name<< endl;
     }
+
+    //generation an insertion of the packets
+
+    int seed = time(NULL);
+    centralStation.generatePackets(N1, seed);
+    centralStation.addTotalGeneratedPackets(N1);
+
+    //assign and process to corresponding Hub
+    centralStation.processToHub();
+
 }
 
-Hub Logistics::getSelectedPC(){ //Ask the user for a PC and return it
+Hub Logistics::getSelectedPC() {
+    int postalCode;
+    cout << "Which Hub would you like to select. Please write the postal code: " << endl;
+    cin >> postalCode;
 
+    Hub * foundHub = hubInTree.search(postalCode);
+    if (foundHub!= nullptr){
+        cout << "Hub found: " << foundHub->getPc().name << " (" << foundHub->getPc().abbreviation << ")" << endl;
+        return *foundHub;
+    }
+    return Hub();
 }
+
 
 void Logistics::showNextPacket(Hub hub){ //Show in the screen the next packet in the hub given
 

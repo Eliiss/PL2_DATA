@@ -1,8 +1,5 @@
 #ifndef UNTITLED2_LOGISTICS_H
 #define UNTITLED2_LOGISTICS_H
-#ifndef Logistics_h
-
-
 #include <iostream>
 #include <string>
 #include "CentralStation.h"
@@ -13,6 +10,9 @@ class Logistics{
 
 private:
     AVL hubInTree;
+    Hub hub;
+    CentralStation centralStation;
+
 
 public:
     void initialise();
@@ -25,6 +25,4 @@ public:
     void movePCPacket(Packet packet, Hub hub);
     void carryOnDelivery();
 };
-
-#endif
 #endif //UNTITLED2_LOGISTICS_H
