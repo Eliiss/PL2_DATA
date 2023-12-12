@@ -1,4 +1,5 @@
 #include "Hub.h"
+#include "AVL.h"
 #include <iostream>
 #include <string>
 
@@ -25,9 +26,9 @@ Packet Hub:: searchPacketHub(const string &packetLabel){
     cout << "Packet "<<packetLabel << " was found" << endl;
 }
 
-bool Hub:: movePacketToAnotherHub(DynamicStack hubs[], const string &packetLabel) {
+bool Hub:: movePacketToAnotherHub(AVL& hubsTree, const string &packetLabel) {
     if (!hubStack.isEmpty()) {
-        hubStack.movePacket(hubs, packetLabel);
+        hubStack.movePacket(hubsTree, packetLabel);
     } else {
         cout << "Source hub is empty. No packet to move." << endl;
     }

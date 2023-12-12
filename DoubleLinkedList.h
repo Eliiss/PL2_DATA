@@ -9,6 +9,8 @@
 
 using std::cout; using std::cin; using std::endl; using std::string;
 
+class AVL;
+
 struct Nodo{
     Packet data;
     Nodo *next;
@@ -24,8 +26,6 @@ private:
     int packetsInHub;
     DynamicStack packetProcessed;
     Hub hubs;
-
-
 
 public:
     DoubleLinkedList();

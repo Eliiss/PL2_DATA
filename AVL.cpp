@@ -113,7 +113,11 @@ AVLNode* AVL::search(AVLNode* node, int postalCode) {
         return search(node->left, postalCode);
     }
 
+
     return search(node->right, postalCode);
+}
+AVLNode* AVL::getRoot(){
+    return root;
 }
 
 void AVL::insert(int postalCode, const Hub& hub) {
@@ -128,4 +132,22 @@ Hub* AVL::search(int postalCode) {
     } else{
         return nullptr;
     }
+}
+
+
+void AVL::searchPacketInAllHubs(AVLNode* node, const string& packetLabel) {
+    if (root != nullptr) {
+        searchPacketInAllHubs(root, packetLabel);
+    } else {
+        cout << "The AVL tree is empty." << endl;
+    }
+    if (node != nullptr) {
+        searchPacketInHub(node->hub, packetLabel);
+        searchPacketInAllHubs(node->left, packetLabel);
+        searchPacketInAllHubs(node->right, packetLabel);
+    }
+}
+
+Packet AVL:: searchPacketInHub(Hub& hub, const string& packetLabel) {
+    return hub.searchPacketHub(packetLabel);
 }

@@ -19,7 +19,7 @@ public:
     Hub getSelectedPC();
     void showNextPacket();
     void showStatistics();
-    Packet searchPacket();
+    void searchPacket();
     void removePacket(Hub hub);
     void transportPacket(Packet packet);
     void movePCPacket();

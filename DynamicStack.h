@@ -10,6 +10,7 @@ using std::cout; using std::cin; using std::endl; using std::string;
 
 struct Node; //reusing queue node
 
+
 class DynamicStack{
 
 private:
@@ -27,7 +28,7 @@ public:
     Packet pop ();
     void process();
     Packet searchPacket(const string &packetLabel);
-    bool movePacket(DynamicStack hubs[], const string &packetLabel);
+    bool movePacket(AVL& hubsTree, const string &packetLabel);
     void deletePacket(const string &packetLabel);
     void displayPackets();
     void displayProcessedPackets();

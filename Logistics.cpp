@@ -57,16 +57,22 @@ void Logistics::showStatistics(){ //Show statistics
 
 }
 
-Packet Logistics::searchPacket(){ //Ask the user for a label, search the packet and return it
+void Logistics::searchPacket() {
     string packetLabel;
     cout << "Enter the label of the packet you want to search: ";
     cin >> packetLabel;
 
-    // Search for the packet in central station
     Packet foundPacket = centralStation.searchByID(packetLabel);
 
-    //Search in Hubs if it's not in the central Station
+    if (foundPacket.getLabel().empty()) {
+        hubInTree.searchPacketInAllHubs(hubInTree.getRoot(), packetLabel);
+    }
 
+    if (!foundPacket.getLabel().empty()) {
+        cout << "Packet " << packetLabel << " was found" << endl;
+    } else {
+        cout << "Packet " << packetLabel << " not found" << endl;
+    }
 }
 
 void Logistics::removePacket(Hub hub){ //Ask the user for a label and remove the packet
@@ -89,8 +95,13 @@ void Logistics::movePCPacket(){ //Move the packet to the new hub and delete it f
     cout << "Enter the label of the packet you want to delete: "<< endl;
     cin >> packetLabel;
 
-    hub = getSelectedPC();
-    hub.movePacketToAnotherHub(hub,packetLabel);
+    Hub sourceHub = getSelectedPC();
+    if (sourceHub.movePacketToAnotherHub(hubInTree,packetLabel)) {
+        cout << "Packet moved successfully." << endl;
+    } else{
+        cout << "Failed to move packet." << endl;
+
+    }
 }
 
 void Logistics::carryOnDelivery(){ //Ni idea loco

@@ -2,7 +2,9 @@
 #include <string>
 #include "DynamicStack.h"
 #include "Packet.h"
+#include "AVL.h"
 
+class AVL;
 using std::cout; using std::cin; using std::endl; using std::string;
 
 
@@ -75,21 +77,23 @@ Packet DynamicStack::searchPacket(const string &packetLabel) {
     return Packet();
 }
 
-bool DynamicStack::movePacket(DynamicStack hubs[], const string &packetLabel) {
+bool DynamicStack::movePacket(AVL&  hubsTree, const string &packetLabel) {
     if (!isEmpty()) {
         Packet packet = searchPacket(packetLabel);
         if (packet.getLabel() == packetLabel) {
-            cout << "Choose the destination hub/enter hub index: ";
-            int destinationIndex;
-            cin >> destinationIndex;
+            cout << "Choose the destination hub (Enter hub postal code): ";
+            int destinationPostalCode;
+            cin >> destinationPostalCode;
 
-            if (destinationIndex >= 0 && destinationIndex < N2) {
-                Packet movedPacket = pop();
-                hubs[destinationIndex].push(movedPacket);
-                cout << "Packet '" << packetLabel << "moved from current PC to destination (Hub " << destinationIndex << ")." << endl;
+            Hub* destinationHub = hubsTree.search(destinationPostalCode);
+
+            if (destinationHub != nullptr) {
+                destinationHub->pushHub(packet);
+                deletePacket(packetLabel);
+                cout << "Packet '" << packetLabel << "' moved to destination Hub " << destinationHub->getPc().abbreviation << "." << endl;
                 return true;
             } else {
-                cout << "Invalid hub index." << endl;
+                cout << "Hub with postal code " << destinationPostalCode << " not found." << endl;
             }
         } else {
             cout << "Packet '" << packetLabel << "' not found in current PC." << endl;
@@ -99,6 +103,7 @@ bool DynamicStack::movePacket(DynamicStack hubs[], const string &packetLabel) {
     }
     return false;
 }
+
 void DynamicStack::deletePacket(const string &packetLabel) {
 
     Node *current = top;
