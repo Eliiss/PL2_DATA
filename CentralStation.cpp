@@ -30,7 +30,7 @@ void CentralStation::transferPackets(Packet packet){
 }
 
 void CentralStation::processToHub() {
-
+    packetInList.process(N3);
 }
 
 

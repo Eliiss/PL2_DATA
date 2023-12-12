@@ -23,6 +23,7 @@ private:
     AVL hubInTree;
     int packetsInHub;
     DynamicStack packetProcessed;
+    Hub hubs;
 
 
 
@@ -34,8 +35,7 @@ public:
     Packet searchByID(const string &id);
     void displayPacketsForHub();
     void transportPacket(Packet &packet);
-    void process();
-    DynamicStack* findPC(int pcPostalCode);
+    void process(int numberToProcess);
     ~DoubleLinkedList();
 
 };

@@ -107,46 +107,37 @@ void DoubleLinkedList::displayPacketsForHub() {
     }
 }
 
-void DoubleLinkedList::process() {
+void DoubleLinkedList::process (int numberToProcess) {
+    Nodo *current = head;
+    int processedCount = 0;
 
-    Nodo* current = head;
+    while (current != nullptr && processedCount < N3) {
+        int postalCode = current->data.getPostalCode();
 
-    for i<197
-        if (packetsInHub >=  N3){
-
-            int postalCode = current->data.getPostalCode();
-
-            if (postalCode== 37115){
-                packetProcessed.push(current->data);
-            }
-            else if (postalCode== 37427){
-                cout << "Packet to be processed to Hub Pedrosillo el Ralo: "<< current<< endl;
-            }
-            else if (postalCode== 37449){
-                cout << "Packet to be processed to Hub Rodillo "<< current<< endl;
-            }
-            else if (postalCode== 37893){
-                cout << "Packet to be processed to Hub Villagonzalo de Tormes: "<< current<< endl;
-            }
-            else if (postalCode== 37797){
-                cout << "Packet to be processed to Hub Castellanos de Villiquera: "<< current<< endl;
-            }
-            else if (postalCode== 37796){
-                cout << "Packet to be processed to Hub Mozárbez: "<< current<< endl;
-            }
-            else if (postalCode== 37129){
-                cout << "Packet to be processed to Hub Barregas: "<< current<< endl;
-            }
-            else if (postalCode== 37340){
-                cout << "Packet to be processed to Hub Aldearrubia: "<< current<< endl;
-            }
-            else if (postalCode== 37001){
-                cout << "Packet to be processed to Hub Salamanca: "<< current<< endl;
-            }
-            current = current->next;
+        if (postalCode == 37115 && hubs.getPostalCode() == postalCode) {
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37427 && hubs.getPostalCode() == postalCode) {
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37449 && hubs.getPostalCode() == postalCode) {
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37893 && hubs.getPostalCode() == postalCode) {
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37797 && hubs.getPostalCode() == postalCode) {
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37796 && hubs.getPostalCode() ==postalCode){
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37129&& hubs.getPostalCode() ==postalCode){
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37340 && hubs.getPostalCode() ==postalCode){
+            packetProcessed.push(current->data);
+        } else if (postalCode == 37001 && hubs.getPostalCode() ==postalCode){
+            packetProcessed.push(current->data);
         }
-    endfor
+        processedCount ++;
+        current = current->next;
+    }
 }
+
 void DoubleLinkedList:: transportPacket(Packet &packet){
 
     Nodo * current = head;
@@ -177,29 +168,16 @@ void DoubleLinkedList:: transportPacket(Packet &packet){
     delete current;
 
     int pcPostalCode= packet.getPostalCode();
-    DynamicStack *pcStack = findPC(pcPostalCode);
+    Hub * hub= hubInTree.search(pcPostalCode);
 
-    if (pcStack != nullptr){
-        pcStack->push(packet);
+    if (hub != nullptr){
+        hub->pushHub(packet);
         cout << "Packet with label " <<packet.getLabel()<< "transported to PC" <<endl;
     }
     else{
         cout <<"PC in label not found in system"<< endl;
     }
 }
-
-DynamicStack* DoubleLinkedList::findPC(int pcPostalCode) {
-    Hub * hub= hubInTree.search(pcPostalCode);
-
-    if (hub != nullptr){
-        DynamicStack & pcStack = hub->getStackByPostalCode(pcPostalCode);
-        return &(pcStack);
-    }
-    else{
-        return nullptr;
-    }
-}
-
 
 DoubleLinkedList:: ~DoubleLinkedList(){
     Nodo* current = head;
